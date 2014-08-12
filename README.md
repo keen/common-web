@@ -5,7 +5,7 @@
 Drop-in tracking of common web analytics events.
 
 Common Web listens to JavaScript clicks and submits and converts them into
-JSON that can be sent to analytics services *or* plain old callbacks.
+JSON that can be sent to analytics services or plain old callbacks.
 
 ### Usage
 
@@ -88,9 +88,8 @@ get interrupted and not go through. To work around that, this library intercepts
 the click/submit events, records the event, then re-clicks/submits the element.
 This causes a slight delay. It's mostly unnoticeable. However, if you know you
 have an element that won't unload the current page, you should just use the
-`trackOtherClicks` and `trackAjaxForm` (coming soon) alternatives.
-
-
+`trackOtherClicks` and `trackAjaxForm` (coming soon) alternatives. Those let events
+bubble up naturally.
 
 ### Example Page
 
@@ -137,7 +136,6 @@ Here's an example `clicked-link` event that shows what properties are collected:
         "patch": "1985"
       }
     },
-    "areWeHavingFunYet": true,
     "referrer_info": {
       "source": null,
       "term": null,
@@ -186,14 +184,15 @@ Here's an example `clicked-link` event that shows what properties are collected:
 
 As with anything on the web, going over HTTP is faster than HTTPS. If
 you're not sending highly secure data, you might want to use HTTP to minimize
-any delay users get as they click around your site. Just do this after configuring
-a Keen client:
+any delay users get as they click around your site. Especially if you're going
+to track most clicks and interactions. To go HTTP, set the protocol
+element of the Keen client:
 
 ```javascript
 CommonWeb.Keen.Client = new Keen({
+  protocol : "http",
   projectId : "<project-id>",
-  writeKey : "<write-key>",
-  protocol : "http"
+  writeKey : "<write-key>"
 });
 ```
 
