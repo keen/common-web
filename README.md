@@ -148,18 +148,23 @@ Here's an example `clicked-link` event that shows what properties are collected:
       "anchor": null
     },
     "element": {
-      "data-four": "four",
+      "style": "color: blue",
+      "text": "Hello world!",
+      "id": "link-0",
+      "href": "./index.html",
+      "tagName": "A",
+      "path": "html > body > p > a#link-0.classy.classy2.classy3",
       "classes": [
-        "more-stuff"
+        "classy",
+        "classy2",
+        "classy3"
       ],
-      "class": "more-stuff",
-      "tagName": "SPAN",
-      "id": "span-1"
+      "class": "classy classy2 classy3"
     },
     "keen": {
-      "timestamp": "2014-08-12T07:40:49.757Z",
-      "created_at": "2014-08-12T07:40:49.757Z",
-      "id": "53e9c501e875962622675dff"
+      "timestamp": "2014-08-12T09:19:28.605Z",
+      "created_at": "2014-08-12T09:19:28.605Z",
+      "id": "53e9dc20c9e163024bc2c799"
     },
     "referrer_url": "",
     "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36",
