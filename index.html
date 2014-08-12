@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="vendor/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="vendor/keen.js"></script>
+    <script type="text/javascript" src="common-web.js"></script>
+    <script type="text/javascript" src="plugins/common-web-keen.js"></script>
+    <script type="text/javascript" src="vendor/keen-local-storage.js"></script>
+</head>
+
+<body>
+
+    <p>
+        <a id="link-0" style="color: blue" class="classy classy2 classy3" href="./index.html">Hello world!</a>
+    </p>
+
+    <p>
+        <a id="link-1" style="color: orange" href="./index.html">Hello no class world!</a>
+    </p>
+
+    <p>
+        <a id="link-2" data-one="1" data-two="2" href="./index.html">Hello no class world!</a>
+    </p>
+
+    <p>
+        <span id="span-0" class="less" data-three="three">Hello span!</span>
+    </p>
+
+    <p>
+        <span id="span-1" class="more-stuff" data-four="four">More Stuff!</span>
+    </p>
+
+    <p>
+        <span id="span-2" class="even-more-stuff" data-five="five">Even More Stuff!</span>
+    </p>
+
+    <form id="form-1" method="GET" action="./index.html" data-six="six">
+        <input type="Submit" value="Submit">
+    </form>
+
+    <script type="text/javascript">
+
+        // Common Web and Keen Setup
+
+
+        // set a place in local storage so it doesn't conflict with other projects
+        KeenLocalStorage.root = "/common-web-keen/";
+
+        // capture project id and write key for the project you want to test out
+        // not necessary where project info is configured in another way
+        // if you want to change projects just call KeenLocalStorage.clear()
+        KeenLocalStorage.prompt();
+
+        // set up a keen client using the prompted local storage info
+        CommonWeb.Keen.Client = new Keen($.extend({}, KeenLocalStorage.get(), {
+            protocol: "http"
+        }));
+
+        // debug mode also prints out JSON events to the console for inspection
+        CommonWeb.Keen.Debug = true;
+
+    </script>
+
+    <script type="text/javascript">
+
+        // Actual Tracking Configuration
+
+
+        // track pageviews
+        CommonWeb.trackPageviews();
+
+        // track link clicks
+        CommonWeb.trackLinkClicks();
+
+        // track other elements, requires explicit elements to be passed
+        CommonWeb.trackOtherClicks($("span.less"));
+
+        // track other elements, adding additional properties
+        CommonWeb.trackOtherClicks($("span.more-stuff"), { areWeHavingFunYet : true });
+
+        // track other elements, adding additional properties that are a function
+        CommonWeb.trackOtherClicks($("span.even-more-stuff"), function(event, element) {
+            return {
+                event: { clientX : event.clientX },
+                element: { tagNameAgain : element.tagName  }
+            };
+        });
+
+        // track form submissions
+        CommonWeb.trackFormSubmissions($("form"));
+
+    </script>
+
+</body>
+
+</html>
