@@ -146,9 +146,9 @@
 
     },
 
-    elementToProperties: function (element) {
+    elementToProperties: function (element, extraProperties) {
 
-      var properties = {};
+      var properties = extraProperties || {};
 
       // add the tag name
       properties.tagName = element.tagName;
@@ -177,9 +177,13 @@
 
     formElementToProperties: function (formElement) {
 
+      var formValues = {};
+
+      // TODO: remove dependency on jQuery
+      formValues.form_values = $("#" + formElement.id).serializeArray();
       // simple alias for now, but could do more as
       // far as the form values are concerned
-      return this.elementToProperties(formElement);
+      return this.elementToProperties(formElement, formValues);
 
     }
 
@@ -190,7 +194,7 @@
     var defaultProperties = CommonWeb.options.defaultProperties;
     var properties = $.extend(true, {}, defaultProperties, toProperties(moreProperties, [event, element]));
 
-    var elementProperties = { element: CommonWeb.Transformations.elementToProperties(element) };
+    var elementProperties = { element: CommonWeb.Transformations.elementToProperties(element, null) };
     var eventProperties = { event: CommonWeb.Transformations.eventToProperties(event) };
 
     return $.extend(true, {}, properties, elementProperties, eventProperties);
