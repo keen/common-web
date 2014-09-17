@@ -4,7 +4,6 @@
     <script type="text/javascript" src="vendor/jquery-1.11.1.js"></script>
     <script type="text/javascript" src="vendor/keen.js"></script>
     <script type="text/javascript" src="common-web.js"></script>
-    <script type="text/javascript" src="plugins/common-web-keen.js"></script>
     <script type="text/javascript" src="vendor/keen-local-storage.js"></script>
 </head>
 
@@ -43,7 +42,6 @@
 
         // Common Web and Keen Setup
 
-
         // set a place in local storage so it doesn't conflict with other projects
         KeenLocalStorage.root = "/common-web-keen/";
 
@@ -60,6 +58,10 @@
         // debug mode also prints out JSON events to the console for inspection
         CommonWeb.Keen.Debug = true;
 
+        CommonWeb.addGlobalProperties(CommonWeb.Keen.globalProperties);
+
+        CommonWeb.Callback = CommonWeb.Keen.Callback;
+
     </script>
 
     <script type="text/javascript">
@@ -68,19 +70,19 @@
 
 
         // track pageviews
-        CommonWeb.trackPageviews();
+        CommonWeb.trackPageview();
 
         // track link clicks
-        CommonWeb.trackLinkClicks();
+        CommonWeb.trackClicks();
 
         // track other elements, requires explicit elements to be passed
-        CommonWeb.trackOtherClicks($("span.less"));
+        CommonWeb.trackClicksPassive($("span.less"));
 
         // track other elements, adding additional properties
-        CommonWeb.trackOtherClicks($("span.more-stuff"), { areWeHavingFunYet : true });
+        CommonWeb.trackClicksPassive($("span.more-stuff"), { areWeHavingFunYet : true });
 
         // track other elements, adding additional properties that are a function
-        CommonWeb.trackOtherClicks($("span.even-more-stuff"), function(event, element) {
+        CommonWeb.trackClicksPassive($("span.even-more-stuff"), function(event, element) {
             return {
                 event: { clientX : event.clientX },
                 element: { tagNameAgain : element.tagName  }

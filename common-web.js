@@ -1,11 +1,10 @@
 (function () {
 
   var options = {
-    pageviewsEventName: "viewed-page",
-    linkClicksEventName: "clicked-link",
-    otherClicksEventName: "clicked-other",
-    formSubmissionsEventName: "submitted-form",
-    defaultProperties: {
+    pageviewsEventName: "pageviews",
+    clicksEventName: "clicks",
+    formSubmissionsEventName: "form-submissions",
+    globalProperties: {
       page_url: window.location.href,
       referrer_url: document.referrer
     }
@@ -16,28 +15,23 @@
     options: options
   };
 
-  // setup default tracking hooks, optionally including more properties
-  // moreProperties can also be a function
-  CommonWeb.track = function (moreProperties) {
-
-    CommonWeb.trackPageviews(moreProperties);
-    CommonWeb.trackLinkClicks($("a"), moreProperties);
-
+  CommonWeb.addGlobalProperties = function(properties) {
+    $.extend(CommonWeb.options.globalProperties, properties);
   }
 
   // setup pageview tracking hooks, optionally including more properties
   // more properties can also be a function
   // do not double set along with track!
-  CommonWeb.trackPageviews = function (moreProperties) {
+  CommonWeb.trackPageview = function (moreProperties) {
 
-    var defaultProperties = CommonWeb.options.defaultProperties;
+    var defaultProperties = CommonWeb.options.globalProperties;
     var properties = $.extend(true, {}, defaultProperties, toProperties(moreProperties));
 
-    CommonWeb.callback(CommonWeb.options.pageviewsEventName, properties);
+    CommonWeb.Callback(CommonWeb.options.pageviewsEventName, properties);
 
   }
 
-  CommonWeb.trackLinkClicks = function (elements, moreProperties) {
+  CommonWeb.trackClicks = function (elements, moreProperties) {
 
     if (typeof elements === 'undefined') {
       elements = $("a");
@@ -64,7 +58,7 @@
           event.preventDefault();
         }
 
-        CommonWeb.callback(options.linkClicksEventName, properties, unloadCallback);
+        CommonWeb.Callback(options.clicksEventName, properties, unloadCallback);
 
       });
 
@@ -74,14 +68,14 @@
 
   // track things that are not links; i.e. don't need any special tricks to
   // prevent page unloads
-  CommonWeb.trackOtherClicks = function (elements, moreProperties) {
+  CommonWeb.trackClicksPassive = function (elements, moreProperties) {
 
     $.each(elements, function (index, element) {
 
       $(element).on('click', function (event) {
 
         var properties = toClickProperties(event, element, moreProperties);
-        CommonWeb.callback(options.otherClicksEventName, properties);
+        CommonWeb.Callback(options.clicksEventName, properties);
 
       });
 
@@ -123,7 +117,7 @@
           event.preventDefault();
         }
 
-        CommonWeb.callback(options.formSubmissionsEventName, properties, unloadCallback);
+        CommonWeb.Callback(options.formSubmissionsEventName, properties, unloadCallback);
 
       });
 
@@ -160,7 +154,7 @@
 
       // add each attribute
       $(element.attributes).each(function (index, attr) {
-        properties[attr.nodeName] = attr.nodeValue;
+        properties[attr.nodeName] = attr.value;
       });
 
       // break classes out into an array if any exist
@@ -191,7 +185,7 @@
 
   function toClickProperties(event, element, moreProperties) {
 
-    var defaultProperties = CommonWeb.options.defaultProperties;
+    var defaultProperties = CommonWeb.options.globalProperties;
     var properties = $.extend(true, {}, defaultProperties, toProperties(moreProperties, [event, element]));
 
     var elementProperties = { element: CommonWeb.Transformations.elementToProperties(element, null) };
@@ -203,7 +197,7 @@
 
   function toSubmitProperties(event, element, moreProperties) {
 
-    var defaultProperties = CommonWeb.options.defaultProperties;
+    var defaultProperties = CommonWeb.options.globalProperties;
     var properties = $.extend(true, {}, defaultProperties, toProperties(moreProperties, [event, element]));
 
     var elementProperties = { element: CommonWeb.Transformations.formElementToProperties(element) };
@@ -265,6 +259,60 @@
       return this.parent().getPath( ' > ' + cur + path );
     }
   });
+
+  // backends
+
+  CommonWeb.Keen = {
+    Client: null,
+    Debug: false,
+    Callback: function (collection, properties, callback) {
+      CommonWeb.Keen.Client.addEvent(collection, properties, function() {
+        if (CommonWeb.Keen.Debug) {
+          console.log(collection + ": " + JSON.stringify(properties));
+        }
+        if (callback) {
+          callback();
+        }
+      });
+    },
+    globalProperties: {
+      keen: {
+        addons: [
+          {
+            "name": "keen:ip_to_geo",
+            "input": {
+              "ip": "ip_address"
+            },
+            "output": "ip_geo_info"
+          },
+          {
+            "name": "keen:ua_parser",
+            "input": {
+              "ua_string": "user_agent"
+            },
+            "output": "parsed_user_agent"
+          },
+          {
+            "name": "keen:url_parser",
+            "input": {
+              "url": "page_url"
+            },
+            "output": "parsed_page_url"
+          },
+          {
+            "name": "keen:referrer_parser",
+            "input": {
+              "referrer_url": "referrer_url",
+              "page_url": "page_url"
+            },
+            "output": "referrer_info"
+          }
+        ]
+      },
+      ip_address: "${keen.ip}",
+      user_agent: "${keen.user_agent}"
+    }
+  };
 
   window.CommonWeb = CommonWeb;
 
