@@ -59,13 +59,13 @@
             window.location.href = element.href;
           };
           event.preventDefault();
+
+          setTimeout(function() {
+            window.location.href = element.href;
+          }, timer);
         }
 
         CommonWeb.Callback(options.clicksEventName, properties, unloadCallback);
-
-        setTimeout(function() {
-          window.location.href = element.href;
-        }, timer);
 
       });
 
@@ -81,14 +81,8 @@
 
       $(element).on('click', function (event) {
 
-        var timer = CommonWeb.options.callbackTimeout;
-
         var properties = toClickProperties(event, element, moreProperties);
         CommonWeb.Callback(options.clicksEventName, properties);
-
-        setTimeout(function() {
-          element.click();
-        }, timer);
 
       });
 
