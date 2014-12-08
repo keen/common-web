@@ -4,6 +4,7 @@
     pageviewsEventName: "pageviews",
     clicksEventName: "clicks",
     formSubmissionsEventName: "form-submissions",
+    callbackTimeout: 1000,
     globalProperties: {
       page_url: window.location.href,
       referrer_url: document.referrer
@@ -41,6 +42,8 @@
 
       $(element).on('click', function (event) {
 
+        var timer = CommonWeb.options.callbackTimeout;
+
         // combine local and global moreProperties
         var properties = toClickProperties(event, element, moreProperties);
 
@@ -56,6 +59,10 @@
             window.location.href = element.href;
           };
           event.preventDefault();
+
+          setTimeout(function() {
+            window.location.href = element.href;
+          }, timer);
         }
 
         CommonWeb.Callback(options.clicksEventName, properties, unloadCallback);
@@ -88,6 +95,8 @@
 
     $.each(elements, function (index, element) {
 
+      var timer = CommonWeb.options.callbackTimeout;
+
       // use to avoid duplicate submits
       var callbackCalled = false;
 
@@ -118,6 +127,11 @@
         }
 
         CommonWeb.Callback(options.formSubmissionsEventName, properties, unloadCallback);
+
+        setTimeout(function() {
+          callbackCalled = true;
+          element.submit();
+        }, timer);
 
       });
 
