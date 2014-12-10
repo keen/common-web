@@ -124,14 +124,17 @@
           };
 
           event.preventDefault();
+
+          // We only want to fire the timeout if
+          // we know the page will unload. Ajax 
+          // form submissions shouldn't submit.
+          setTimeout(function() {
+            callbackCalled = true;
+            element.submit();
+          }, timer);
         }
 
         CommonWeb.Callback(options.formSubmissionsEventName, properties, unloadCallback);
-
-        setTimeout(function() {
-          callbackCalled = true;
-          element.submit();
-        }, timer);
 
       });
 
