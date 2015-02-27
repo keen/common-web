@@ -33,7 +33,11 @@
         <span id="span-2" class="even-more-stuff" data-five="five">Even More Stuff!</span>
     </p>
 
-    <form id="form-1" method="GET" action="./index.html" data-six="six">
+    <form method="GET" action="./index.html" data-six="six">
+        <input type="text" name="text field" id="text_field" placeholder="Type something" />
+        <br>
+        <textarea name="textarea field" id="textarea_field" placeholder="Type longer things"></textarea>
+        <br>
         <input type="hidden" name="hidden field" id="hidden_field" value="this is hidden" />
         <input type="Submit" value="Submit">
     </form>
@@ -93,6 +97,9 @@
 
         // track form submissions
         CommonWeb.trackFormSubmissions();
+
+        // track input changes
+        CommonWeb.trackInputChanges();
 
     </script>
 
