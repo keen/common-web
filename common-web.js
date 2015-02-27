@@ -241,7 +241,7 @@
       var formValues = {};
 
       // TODO: remove dependency on jQuery
-      formValues.form_values = $("#" + formElement.id).serializeArray();
+      formValues.form_values = $(formElement).serializeArray();
       // simple alias for now, but could do more as
       // far as the form values are concerned
       return this.elementToProperties(formElement, formValues);
