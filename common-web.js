@@ -139,6 +139,10 @@
   // track form submissions
   CommonWeb.trackFormSubmissions = function (elements, moreProperties) {
 
+    if (typeof elements === 'undefined') {
+      elements = $("form");
+    }
+
     $.each(elements, function (index, element) {
 
       var timer = CommonWeb.options.callbackTimeout;
