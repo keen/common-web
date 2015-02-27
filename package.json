@@ -8,7 +8,7 @@
     "url": "https://github.com/keen/common-web.git"
   },
   "scripts": {
-    "start": "gulp watch"
+    "start": "gulp"
   },
   "bugs": "https://github.com/keen/common-web/issues",
   "author": "Josh Dzielak <josh@keen.io> (https://keen.io/)",
