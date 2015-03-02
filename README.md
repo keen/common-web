@@ -45,7 +45,7 @@ be useful to anyone!
 
 ### Already a Keen IO user?
 
-Hooray! <# <3 CommonWeb can help level up your web analytics game. It might allow you to pare down old
+Hooray! <3 <3 CommonWeb can help level up your web analytics game. It might allow you to pare down old
 tracking code, or just learn something new about your users.
 
 CommonWeb is not a replacement for [keen-js](https://github.com/keenlabs/keen-js). Rather,
