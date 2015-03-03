@@ -1,0 +1,28 @@
+{
+  "name": "common-web",
+  "version": "3.2.3",
+  "main": "common-web.js",
+  "browser": "common-web.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keen/common-web.git"
+  },
+  "scripts": {
+    "start": "gulp"
+  },
+  "bugs": "https://github.com/keen/common-web/issues",
+  "author": "Josh Dzielak <josh@keen.io> (https://keen.io/)",
+  "contributors": [
+    "Alex Kleissner <alex@keen.io> (https://github.com/hex337)",
+    "Joe Wegner <joe@wegnerdesign.com> (http://www.wegnerdesign.com)"
+  ],
+  "engines": {
+    "node": "0.10.x"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-rename": "^1.2.0",
+    "gulp-util": "^3.0.1",
+    "gulp-yuicompressor": "0.0.3"
+  }
+}
