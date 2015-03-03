@@ -94,6 +94,10 @@ The CommonWeb API contains several `trackXXX` methods that initialize tracking f
 Here's an example of each:
 
 ``` javascript
+
+// add a user-specific GUID to all events for tracking user flow
+CommonWeb.trackSession();
+
 // track the pageview
 CommonWeb.trackPageview();
 
@@ -224,6 +228,20 @@ These properties are sent with every event by default:
 JavaScript event and HTML element objects are turned into JSON structures and
 places at the `event` and `element` top level keys respectively.
 
+##### Session Tracking
+
+You can have CommonWeb generate a user-specific GUID that will be sent along with all of your CommonWeb events. This GUID will be stored in the user's cookies (and persist for one year), so you can relate future events to the same user. Turn on session tracking like this:
+
+```javascript
+CommonWeb.trackSession();
+```
+
+`trackSession` will also accept two arguments: the first is the name of the cookie to use. The second is the GUID to use, if there isn't already one stored. Pass them in like this:
+
+```javascript
+CommonWeb.trackSession('custom_guid_cookie', 'semi-random-user-identifier');
+```
+
 ##### Keen Backend
 
 *More documentation needed here*
@@ -295,7 +313,8 @@ Here's an example `clicks` event that shows what properties are collected:
       "metaKey": false,
       "type": "click"
     },
-    "page_url": "file:///Users/dzello/keen/common-web/index.html"
+    "page_url": "file:///Users/dzello/keen/common-web/index.html",
+    "guid": "e54029e7-6a54-b39f-c592-022686afb9c9"
   }
 ]
 ```
