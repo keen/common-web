@@ -195,7 +195,7 @@
   CommonWeb.trackInputChanges = function (elements, moreProperties) {
 
     if (typeof elements === 'undefined') {
-      elements = $("input, textarea");
+      elements = $("input, textarea, select");
     }
 
     $.each(elements, function(index, element) {
@@ -205,6 +205,7 @@
 
         var properties = toChangeProperties(event, element, currentValue, moreProperties);
         CommonWeb.Callback(options.changesEventName, properties);
+        console.log(JSON.stringify(properties))
 
         currentValue = $(element).val()
       });
