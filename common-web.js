@@ -205,7 +205,6 @@
 
         var properties = toChangeProperties(event, element, currentValue, moreProperties);
         CommonWeb.Callback(options.changesEventName, properties);
-        console.log(JSON.stringify(properties))
 
         currentValue = $(element).val()
       });
