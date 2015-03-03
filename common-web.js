@@ -22,8 +22,8 @@
 
   // initiate user tracking, using a GUID stored in a cookie
   // The user can pass in a custom cookie name and custom GUID, if they would like
-  CommonWeb.trackSession = function(cookieName, guid) {
-    if(typeof(cookieName) === "undefined") {
+  CommonWeb.trackSession = function(cookieName, defaultGuid) {
+    if(typeof(cookieName) !== "string") {
       cookieName = "common_web_guid";
     }
 
@@ -42,12 +42,16 @@
 
     // We didn't find our guid in the cookies, so we need to generate our own
     if(guid === null) {
-      genSub = function() {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-      }
+      if(typeof(defaultGuid) === "string") {
+        guid = defaultGuid;
+      } else {
+        genSub = function() {
+          return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
 
-      guid = genSub() + genSub() + "-" + genSub() + "-" + 
-        genSub() + "-" + genSub() + "-" + genSub() + genSub() + genSub();
+        guid = genSub() + genSub() + "-" + genSub() + "-" + 
+          genSub() + "-" + genSub() + "-" + genSub() + genSub() + genSub();
+      }
 
       expiration_date = new Date();
       expiration_date.setFullYear(expiration_date.getFullYear() + 1);
