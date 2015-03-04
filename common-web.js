@@ -2,7 +2,7 @@
 
   var options = {
     pageviewsEventName: "pageviews",
-    changeEventName: "changes",
+    inputChangeEventName: "input-changes",
     clicksEventName: "clicks",
     formSubmissionsEventName: "form-submissions",
     callbackTimeout: 1000,
@@ -204,7 +204,7 @@
       $(element).on('change', function(event) {
 
         var properties = toChangeProperties(event, element, currentValue, moreProperties);
-        CommonWeb.Callback(options.changesEventName, properties);
+        CommonWeb.Callback(options.inputChangeEventName, properties);
 
         currentValue = $(element).val()
       });
