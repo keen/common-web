@@ -116,7 +116,7 @@ CommonWeb.trackClicksPassive($("span"));
 Most links (`<a>` tags) unload pages when they are clicked
 because the user is being taken to a new page. Same with traditional, non-ajax form submissions.
 If the page unloads before a call to record the event is finished the event may not be recorded. This
-is a common issue in web analytics that often goes noticed to the detriment of accurate data.
+is a common issue in web analytics that often goes unnoticed to the detriment of accurate data.
 
 CommonWeb's solution is to have you specify explicitly when to work around this scenario; i.e. to
 tell CommonWeb what links / forms are going to unload the page. In that case CommonWeb will prevent the default
@@ -138,10 +138,10 @@ If you only want certain elements tracked, pass them in as the first argument to
 
 ```javascript
 // track clicks on the nav
-CommonWeb.trackClicks($(".nav a");
+CommonWeb.trackClicks($(".nav a"));
 
 // track clicks with a specific attribute
-CommonWeb.trackClicks($("a[data-track=true]");
+CommonWeb.trackClicks($("a[data-track=true]"));
 ```
 
 The same arguments work for tracking non-link-clicks and forms:
@@ -183,13 +183,13 @@ CommonWeb.addGlobalProperties({
 Here's how to specific properties that will only be added to a specific element's click:
 
 ```javascript
-CommonWeb.trackClicks($("span.less"), { another: "property" );
+CommonWeb.trackClicks($("span.less"), { another: "property" });
 ```
 
 You can also pass a function to compute properties lazily at the time of the event:
 
 ```javascript
-CommonWeb.trackClicksPassive($("span.even-more-stuff"), function(event, element) {
+CommonWeb.trackClicksPassive($("span.even-more-stuff"), function (event, element) {
     return {
         event: { clientX : event.clientX },
         element: { tagNameAgain : element.tagName  }
