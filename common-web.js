@@ -2,6 +2,7 @@
 
   var options = {
     pageviewsEventName: "pageviews",
+    inputChangeEventName: "input-changes",
     clicksEventName: "clicks",
     formSubmissionsEventName: "form-submissions",
     callbackTimeout: 1000,
@@ -139,6 +140,10 @@
   // track form submissions
   CommonWeb.trackFormSubmissions = function (elements, moreProperties) {
 
+    if (typeof elements === 'undefined') {
+      elements = $("form");
+    }
+
     $.each(elements, function (index, element) {
 
       var timer = CommonWeb.options.callbackTimeout;
@@ -182,6 +187,26 @@
 
         CommonWeb.Callback(options.formSubmissionsEventName, properties, unloadCallback);
 
+      });
+
+    });
+  }
+
+  CommonWeb.trackInputChanges = function (elements, moreProperties) {
+
+    if (typeof elements === 'undefined') {
+      elements = $("input, textarea, select");
+    }
+
+    $.each(elements, function(index, element) {
+      var currentValue = $(element).val()
+
+      $(element).on('change', function(event) {
+
+        var properties = toChangeProperties(event, element, currentValue, moreProperties);
+        CommonWeb.Callback(options.inputChangeEventName, properties);
+
+        currentValue = $(element).val()
       });
 
     });
@@ -237,10 +262,25 @@
       var formValues = {};
 
       // TODO: remove dependency on jQuery
-      formValues.form_values = $("#" + formElement.id).serializeArray();
+      formValues.form_values = $(formElement).serializeArray();
       // simple alias for now, but could do more as
       // far as the form values are concerned
       return this.elementToProperties(formElement, formValues);
+
+    },
+
+    inputElementToProperties: function(inputElement) {
+
+      var inputValues = {
+        value: $(inputElement).val()
+      };
+
+      var parentForm = $(inputElement).closest("form");
+      if(parentForm.size() > 0) {
+        inputValues.form = this.elementToProperties(parentForm[0])
+      }
+
+      return this.elementToProperties(inputElement, inputValues);
 
     }
 
@@ -256,6 +296,21 @@
 
     return $.extend(true, {}, properties, elementProperties, eventProperties);
 
+  }
+
+  function toChangeProperties(event, element, previousValue, moreProperties) {
+
+    var defaultProperties = CommonWeb.options.globalProperties;
+    var properties = $.extend(true, {}, defaultProperties, toProperties(moreProperties, [event, element]));
+
+    var elementProperties = { element: CommonWeb.Transformations.inputElementToProperties(element) };
+    if(previousValue && previousValue !== "") {
+      elementProperties.element.previousValue = previousValue
+    }
+
+    var eventProperties = { event: CommonWeb.Transformations.eventToProperties(event) };
+
+    return $.extend(true, {}, properties, elementProperties, eventProperties);
   }
 
   function toSubmitProperties(event, element, moreProperties) {

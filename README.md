@@ -107,6 +107,9 @@ CommonWeb.trackClicks();
 // track submissions for every form on the page
 CommonWeb.trackFormSubmissions();
 
+// track changes to every input on the page
+CommonWeb.trackInputChanges();
+
 // track clicks for non-link tags on the page, requires argument
 CommonWeb.trackClicksPassive($("span"));
 ```
@@ -130,6 +133,7 @@ The methods that alter default behavior. Here they are:
 These methods are more passive, and don't interrupt any normal event flow:
 
 + `trackClicksPassive`
++ `trackInputChanges`
 + `trackFormSubmissionsPassive` (coming soon)
 
 ### Specify HTML Elements (Recommended)
@@ -142,6 +146,9 @@ CommonWeb.trackClicks($(".nav a"));
 
 // track clicks with a specific attribute
 CommonWeb.trackClicks($("a[data-track=true]"));
+
+// track changes to number inputs
+CommonWeb.trackInputChanges($("input[type='number']"));
 ```
 
 The same arguments work for tracking non-link-clicks and forms:
