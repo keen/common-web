@@ -20,6 +20,52 @@
     $.extend(CommonWeb.options.globalProperties, properties);
   }
 
+  // initiate user tracking, using a GUID stored in a cookie
+  // The user can pass in a custom cookie name and custom GUID, if they would like
+  CommonWeb.trackSession = function(cookieName, defaultGuid) {
+    if(typeof(cookieName) !== "string") {
+      cookieName = "common_web_guid";
+    }
+
+    // Look for the GUID in the currently set cookies
+    var cookies = document.cookie.split('; ');
+    var guid = null;
+
+    for(var i=0; i < cookies.length; i++) {
+      cookieParts = cookies[i].split('=')
+      if(cookieParts[0] === cookieName) {
+        // Got it!
+        guid = cookieParts[1];
+        break;
+      }
+    }
+
+    // We didn't find our guid in the cookies, so we need to generate our own
+    if(guid === null) {
+      if(typeof(defaultGuid) === "string") {
+        guid = defaultGuid;
+      } else {
+        genSub = function() {
+          return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+
+        guid = genSub() + genSub() + "-" + genSub() + "-" + 
+          genSub() + "-" + genSub() + "-" + genSub() + genSub() + genSub();
+      }
+
+      expiration_date = new Date();
+      expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+
+      cookie_string = cookieName + "=" + guid + "; path/; expires=" + expiration_date.toGMTString();
+      document.cookie = cookie_string
+
+    }
+    
+    CommonWeb.addGlobalProperties({guid: guid});
+
+    return guid;
+  }
+
   // setup pageview tracking hooks, optionally including more properties
   // more properties can also be a function
   // do not double set along with track!
