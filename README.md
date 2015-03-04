@@ -1,7 +1,5 @@
 # CommonWeb
 
-*Under Construction! Documentation and code may not be in sync yet. Have a question? Just ask!*
-
 CommonWeb is an open source JavaScript library that transforms common web user activity into a stream
 of event data you can listen to and analyze. CommonWeb listens for:
 
