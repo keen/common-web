@@ -18,7 +18,7 @@ The data emitted by CommonWeb can be used to compute traditional web metrics lik
 + Content Ranking
 + …and more
 
-CommonWeb supports integrations with services like [Keen IO](https://keen.io/) that provide
+CommonWeb supports integrations with services like [Keen IO](https://keen.io/?s=common-web) that provide
  tools for analyzing and reporting on streams of event data.
 
 ### Philosophy
