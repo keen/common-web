@@ -275,21 +275,25 @@ Here's an example `clicks` event that shows what properties are collected:
       }
     },
     "referrer_info": {
-      "source": null,
-      "term": null,
-      "medium": null
+      "medium" : "SEARCH",
+      "source" : "http://google.com/",
+      "term" : "analytics"
     },
     "parsed_page_url": {
-      "path": "/Users/dzello/keen/common-web/index.html",
-      "domain": "",
-      "protocol": "file",
-      "anchor": null
+      "path": "/docs/data-collection",
+      "domain": "keen.io",
+      "protocol": "https",
+      "anchor": null,
+      "query_string": {
+        "page": "1",
+        "term": "analytics"
+      }
     },
     "element": {
       "style": "color: blue",
-      "text": "Hello world!",
+      "text": "Data Enrichment",
       "id": "link-0",
-      "href": "./index.html",
+      "href": "/docs",
       "tagName": "A",
       "path": "html > body > p > a#link-0.classy.classy2.classy3",
       "classes": [
@@ -318,7 +322,7 @@ Here's an example `clicks` event that shows what properties are collected:
       "metaKey": false,
       "type": "click"
     },
-    "page_url": "file:///Users/dzello/keen/common-web/index.html",
+    "page_url": "https://keen.io/docs/data-collection",
     "guid": "e54029e7-6a54-b39f-c592-022686afb9c9"
   }
 ]
