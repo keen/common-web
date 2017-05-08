@@ -1,5 +1,7 @@
 # CommonWeb
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fcommon-web.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fcommon-web?ref=badge_shield)
+
 CommonWeb is an open source JavaScript library that transforms common web user activity into a stream
 of event data you can listen to and analyze. CommonWeb listens for:
 
@@ -383,3 +385,7 @@ npm start
 + Capture even more common interactions (e.g. time on page)
 + Create dashboards and visualizations based on this data!
 + AJAX Form Handling
+
+## License
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fcommon-web.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fcommon-web?ref=badge_large)
