@@ -204,9 +204,10 @@
       $(element).on('change', function(event) {
 
         var properties = toChangeProperties(event, element, currentValue, moreProperties);
+        properties.element.value =  $(element).val(); //add current value to properties
         CommonWeb.Callback(options.inputChangeEventName, properties);
 
-        currentValue = $(element).val()
+        currentValue = $(element).val();
       });
 
     });
