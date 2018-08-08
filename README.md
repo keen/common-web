@@ -1,15 +1,13 @@
 # CommonWeb
 
+---
 
+# Deprecation Notice
 
-## Deprecation Notice
-
-CommonWeb is *deprecated*, use Keen Tracking.js
+CommonWeb is **deprecated**, instead use the Keen Tracking.js library
 [https://github.com/keen/keen-tracking.js](https://github.com/keen/keen-tracking.js)
 
-
-
--
+---
 
 CommonWeb is an open source JavaScript library that transforms common web user activity into a stream
 of event data you can listen to and analyze. CommonWeb listens for:
