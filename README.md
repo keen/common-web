@@ -1,6 +1,15 @@
 # CommonWeb
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fcommon-web.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fcommon-web?ref=badge_shield)
+
+
+## Deprecation Notice
+
+CommonWeb is *deprecated*, use Keen Tracking.js
+[https://github.com/keen/keen-tracking.js](https://github.com/keen/keen-tracking.js)
+
+
+
+-
 
 CommonWeb is an open source JavaScript library that transforms common web user activity into a stream
 of event data you can listen to and analyze. CommonWeb listens for:
@@ -70,8 +79,8 @@ Include dependencies before including `common-web.min.js` itself. For example, h
 
 ``` html
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="//d26b395fwzu5fz.cloudfront.net/3.0.7/keen.min.js"></script>
-<script type="text/javascript" src="common-web..min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/keen-js@3"></script>
+<script type="text/javascript" src="common-web.min.js"></script>
 ```
 
 If you're using the Keen IO backend, you'll need to tell CommonWeb about the `Keen.Client` instance
