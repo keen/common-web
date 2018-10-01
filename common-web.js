@@ -5,6 +5,7 @@
     inputChangeEventName: "input-changes",
     clicksEventName: "clicks",
     formSubmissionsEventName: "form-submissions",
+    ajaxFormSubmissionEventName: "ajax-form-submission",
     callbackTimeout: 1000,
     globalProperties: {
       page_url: window.location.href,
@@ -192,6 +193,20 @@
     });
   }
 
+  // track Ajax form submission
+  CommonWeb.trackAjaxFormSubmission = function (formelement, clickelement, moreProperties) {
+
+    $(clickelement).on('click', function (event) {
+
+      event.type = 'submit'; //Change current Event from Click to Submit because we need track this as Ajax Form Submit
+      var properties = toSubmitProperties(event, formelement, moreProperties);
+      
+      CommonWeb.Callback(options.ajaxFormSubmissionEventName, properties);
+
+    });
+    
+  }
+
   CommonWeb.trackInputChanges = function (elements, moreProperties) {
 
     if (typeof elements === 'undefined') {
@@ -204,9 +219,10 @@
       $(element).on('change', function(event) {
 
         var properties = toChangeProperties(event, element, currentValue, moreProperties);
+        properties.element.value =  $(element).val(); //add current value to properties
         CommonWeb.Callback(options.inputChangeEventName, properties);
 
-        currentValue = $(element).val()
+        currentValue = $(element).val();
       });
 
     });
@@ -258,6 +274,17 @@
     },
 
     formElementToProperties: function (formElement) {
+
+      //SPECIAL FIX: Add Name attribute for Input Element lack of name attribute, jQuery serialize() and serializeArray() need Name attribute
+      $($(formElement).prop('elements')).each(function(){
+          if(!this.name){
+            if(this.id){
+              this.name = this.id;
+            }else{
+              this.name = Math.random().toString(36).substr(2, 10);
+            }
+          }
+      });
 
       var formValues = {};
 
